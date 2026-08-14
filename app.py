@@ -1,7 +1,6 @@
 import base64
 import math
 from pathlib import Path
-
 import pandas as pd
 import streamlit as st
 
