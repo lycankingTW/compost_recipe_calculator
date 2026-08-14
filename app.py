@@ -192,37 +192,73 @@ st.markdown(
         /* -----------------------------------------
            按鈕
            ----------------------------------------- */
+        /* 一般按鈕及下載按鈕 */
         .stButton > button,
         .stDownloadButton > button {
             min-height: 2.8rem;
-            color: #FFFFFF !important;
+            color: #F7FFF4 !important;
+            -webkit-text-fill-color: #F7FFF4 !important;
             background-color: #28643A !important;
             border: 1px solid #28643A !important;
             border-radius: 9px !important;
             font-weight: 700 !important;
+            }
+
+        /* 按鈕內部文字元素 */
+        .stButton > button p,
+        .stButton > button span,
+        .stButton > button div,
+        .stDownloadButton > button p,
+        .stDownloadButton > button span,
+        .stDownloadButton > button div {
+            color: #F7FFF4 !important;
+            -webkit-text-fill-color: #F7FFF4 !important;
+            opacity: 1 !important;
         }
 
+        /* 滑鼠移入 */
         .stButton > button:hover,
         .stDownloadButton > button:hover {
             color: #FFFFFF !important;
+            -webkit-text-fill-color: #FFFFFF !important;
             background-color: #1D4E2D !important;
             border-color: #1D4E2D !important;
         }
 
-        .stButton > button:focus,
-        .stDownloadButton > button:focus {
+        /* 滑鼠移入時的內部文字 */
+        .stButton > button:hover p,
+        .stButton > button:hover span,
+        .stButton > button:hover div,
+        .stDownloadButton > button:hover p,
+        .stDownloadButton > button:hover span,
+        .stDownloadButton > button:hover div {
             color: #FFFFFF !important;
-            border-color: #D58B20 !important;
-            box-shadow: 0 0 0 0.2rem rgba(213, 139, 32, 0.22) !important;
+            -webkit-text-fill-color: #FFFFFF !important;
         }
 
-        /* 停用的移除按鈕 */
-        .stButton > button:disabled {
-            color: #68756C !important;
+        /* 聚焦及點擊 */
+        .stButton > button:focus,
+        .stButton > button:active,
+        .stDownloadButton > button:focus,
+        .stDownloadButton > button:active {
+            color: #FFFFFF !important;
+            -webkit-text-fill-color: #FFFFFF !important;
+            background-color: #1D4E2D !important;
+            border-color: #D58B20 !important;
+        }
+
+        /* 停用按鈕 */
+        .stButton > button:disabled,
+        .stButton > button:disabled p,
+        .stButton > button:disabled span,
+        .stButton > button:disabled div {
+            color: #667269 !important;
+            -webkit-text-fill-color: #667269 !important;
             background-color: #E6EAE4 !important;
             border-color: #CCD3C9 !important;
             opacity: 1 !important;
         }
+
 
         /* -----------------------------------------
            提示訊息
