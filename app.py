@@ -1,5 +1,4 @@
 import math
-
 import pandas as pd
 import streamlit as st
 
@@ -20,12 +19,20 @@ st.set_page_config(
 # 注意：隱藏選單僅降低使用者直接點擊 GitHub 連結的便利性，
 # 不能取代私人儲存庫或其他原始碼存取控制。
 # =========================================================
+# =========================================================
+# CSS：高對比淺色農業主題
+# =========================================================
 st.markdown(
     """
     <style>
-        #MainMenu {visibility: hidden;}
-        header {visibility: hidden;}
-        footer {visibility: hidden;}
+        /* -----------------------------------------
+           隱藏 Streamlit 預設介面
+           ----------------------------------------- */
+        #MainMenu,
+        footer,
+        header {
+            visibility: hidden;
+        }
 
         [data-testid="stToolbar"],
         [data-testid="stDecoration"],
@@ -38,14 +45,31 @@ st.markdown(
             visibility: hidden;
         }
 
+        /* -----------------------------------------
+           全域背景與文字
+           ----------------------------------------- */
+        html,
+        body,
+        [class*="css"],
+        .stApp,
+        [data-testid="stAppViewContainer"],
+        [data-testid="stMain"],
+        .main {
+            color: #26332A !important;
+        }
+
         .stApp {
             background:
-                radial-gradient(circle at 8% 5%, rgba(197, 225, 165, 0.45), transparent 28rem),
-                #f4f7ef;
+                radial-gradient(
+                    circle at 8% 5%,
+                    rgba(191, 215, 166, 0.40),
+                    transparent 30rem
+                ),
+                #F4F7EF !important;
         }
 
         [data-testid="stAppViewContainer"] > .main {
-            background: transparent;
+            background: transparent !important;
         }
 
         .block-container {
@@ -54,50 +78,277 @@ st.markdown(
             padding-bottom: 4rem;
         }
 
-        h1, h2, h3 {
-            color: #1f5d35;
+        /* 一般文字及 Markdown */
+        p,
+        li,
+        span,
+        label,
+        div[data-testid="stMarkdownContainer"] {
+            color: #26332A;
+        }
+
+        /* -----------------------------------------
+           標題
+           ----------------------------------------- */
+        h1 {
+            color: #174D2B !important;
+            font-weight: 800 !important;
             letter-spacing: 0.01em;
         }
 
-        div[data-testid="stMetric"] {
-            background-color: #ffffff;
-            border: 1px solid #c7d9bc;
-            border-left: 6px solid #2e7d32;
-            border-radius: 0.75rem;
-            padding: 1rem;
-            box-shadow: 0 8px 22px rgba(31, 93, 53, 0.07);
+        h2 {
+            color: #1F6037 !important;
+            font-weight: 750 !important;
         }
 
-        div[data-testid="stExpander"] {
-            background-color: rgba(255, 255, 255, 0.88);
-            border: 1px solid #c7d9bc;
-            border-radius: 0.75rem;
+        h3,
+        h4 {
+            color: #285F3C !important;
+            font-weight: 700 !important;
         }
 
+        [data-testid="stCaptionContainer"],
+        [data-testid="stCaptionContainer"] p {
+            color: #526459 !important;
+            opacity: 1 !important;
+        }
+
+        /* -----------------------------------------
+           材料卡片
+           ----------------------------------------- */
         [data-testid="stVerticalBlockBorderWrapper"] {
-            background-color: rgba(255, 255, 255, 0.82);
-            border-radius: 0.8rem;
+            background-color: #FFFFFF !important;
+            border: 1px solid #C7D8BC !important;
+            border-radius: 14px !important;
+            box-shadow: 0 8px 22px rgba(31, 93, 53, 0.08);
+        }
+
+        /* -----------------------------------------
+           輸入欄位標籤
+           ----------------------------------------- */
+        [data-testid="stWidgetLabel"],
+        [data-testid="stWidgetLabel"] p,
+        [data-testid="stWidgetLabel"] span {
+            color: #304638 !important;
+            font-weight: 650 !important;
+            opacity: 1 !important;
+        }
+
+        /* -----------------------------------------
+           Selectbox 與 number input
+           ----------------------------------------- */
+        [data-baseweb="select"] > div,
+        [data-testid="stNumberInput"] input,
+        [data-testid="stTextInput"] input {
+            color: #1F2D24 !important;
+            background-color: #FFFFFF !important;
+            border-color: #9DB591 !important;
+        }
+
+        [data-baseweb="select"] span,
+        [data-baseweb="select"] div {
+            color: #1F2D24 !important;
+        }
+
+        [data-testid="stNumberInput"] input,
+        [data-testid="stTextInput"] input {
+            -webkit-text-fill-color: #1F2D24 !important;
+        }
+
+        [data-testid="stNumberInput"] input::placeholder,
+        [data-testid="stTextInput"] input::placeholder {
+            color: #78877D !important;
+            opacity: 1 !important;
+        }
+
+        /* 數字欄位的加減按鈕 */
+        [data-testid="stNumberInput"] button {
+            color: #234E31 !important;
+            background-color: #EDF4E8 !important;
+        }
+
+        [data-testid="stNumberInput"] button svg {
+            fill: #234E31 !important;
+        }
+
+        /* 下拉選單展開後的選項 */
+        [data-baseweb="popover"],
+        [data-baseweb="menu"],
+        [role="listbox"] {
+            background-color: #FFFFFF !important;
+        }
+
+        [role="option"] {
+            color: #1F2D24 !important;
+            background-color: #FFFFFF !important;
+        }
+
+        [role="option"]:hover,
+        [aria-selected="true"][role="option"] {
+            color: #143922 !important;
+            background-color: #DCEAD3 !important;
+        }
+
+        /* -----------------------------------------
+           按鈕
+           ----------------------------------------- */
+        .stButton > button,
+        .stDownloadButton > button {
+            min-height: 2.8rem;
+            color: #FFFFFF !important;
+            background-color: #28643A !important;
+            border: 1px solid #28643A !important;
+            border-radius: 9px !important;
+            font-weight: 700 !important;
+        }
+
+        .stButton > button:hover,
+        .stDownloadButton > button:hover {
+            color: #FFFFFF !important;
+            background-color: #1D4E2D !important;
+            border-color: #1D4E2D !important;
+        }
+
+        .stButton > button:focus,
+        .stDownloadButton > button:focus {
+            color: #FFFFFF !important;
+            border-color: #D58B20 !important;
+            box-shadow: 0 0 0 0.2rem rgba(213, 139, 32, 0.22) !important;
+        }
+
+        /* 停用的移除按鈕 */
+        .stButton > button:disabled {
+            color: #68756C !important;
+            background-color: #E6EAE4 !important;
+            border-color: #CCD3C9 !important;
+            opacity: 1 !important;
+        }
+
+        /* -----------------------------------------
+           提示訊息
+           ----------------------------------------- */
+        [data-testid="stAlert"] {
+            border-radius: 10px !important;
+        }
+
+        [data-testid="stAlert"] p,
+        [data-testid="stAlert"] span,
+        [data-testid="stAlert"] div {
+            color: #26332A !important;
         }
 
         .scientific-note {
-            border-left: 5px solid #d98c2b;
-            background: #fff9ec;
-            color: #59451f;
-            border-radius: 0.4rem;
-            padding: 0.85rem 1rem;
-            margin: 0.6rem 0 1rem 0;
+            color: #4A3A1C !important;
+            background-color: #FFF8E9 !important;
+            border-left: 6px solid #D68A1C;
+            border-radius: 9px;
+            padding: 0.9rem 1.1rem;
+            margin: 0.7rem 0 1.1rem;
+        }
+
+        .scientific-note,
+        .scientific-note strong {
+            color: #4A3A1C !important;
+        }
+
+        /* -----------------------------------------
+           Expander
+           ----------------------------------------- */
+        div[data-testid="stExpander"] {
+            color: #26332A !important;
+            background-color: #FFFFFF !important;
+            border: 1px solid #C7D8BC !important;
+            border-radius: 12px !important;
+        }
+
+        div[data-testid="stExpander"] summary,
+        div[data-testid="stExpander"] summary span,
+        div[data-testid="stExpander"] summary p {
+            color: #244C31 !important;
+            font-weight: 700 !important;
+        }
+
+        /* -----------------------------------------
+           結果指標
+           ----------------------------------------- */
+        div[data-testid="stMetric"] {
+            color: #26332A !important;
+            background-color: #FFFFFF !important;
+            border: 1px solid #C7D8BC !important;
+            border-left: 6px solid #2E7D32 !important;
+            border-radius: 12px !important;
+            padding: 1rem;
+            box-shadow: 0 8px 22px rgba(31, 93, 53, 0.08);
+        }
+
+        div[data-testid="stMetricLabel"],
+        div[data-testid="stMetricLabel"] p {
+            color: #4A5E50 !important;
+        }
+
+        div[data-testid="stMetricValue"],
+        div[data-testid="stMetricValue"] div {
+            color: #174D2B !important;
+            font-weight: 800 !important;
+        }
+
+        /* -----------------------------------------
+           資料表
+           ----------------------------------------- */
+        [data-testid="stDataFrame"] {
+            background-color: #FFFFFF !important;
+            border: 1px solid #C7D8BC;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        /* -----------------------------------------
+           公式
+           ----------------------------------------- */
+        [data-testid="stLatex"] {
+            color: #1E3024 !important;
+            background-color: #F8FAF5;
+            border-left: 4px solid #7CA06C;
+            border-radius: 6px;
+            padding: 0.65rem 0.85rem;
+            overflow-x: auto;
+        }
+
+        [data-testid="stLatex"] svg {
+            color: #1E3024 !important;
+        }
+
+        /* -----------------------------------------
+           分隔線及頁尾
+           ----------------------------------------- */
+        hr {
+            border-color: #B8C9AE !important;
         }
 
         .copyright {
-            color: #617064;
+            color: #526459 !important;
             font-size: 0.82rem;
             text-align: center;
             margin-top: 1.5rem;
+        }
+
+        /* -----------------------------------------
+           手機版
+           ----------------------------------------- */
+        @media (max-width: 700px) {
+            .block-container {
+                padding: 1.2rem 1rem 3rem;
+            }
+
+            h1 {
+                font-size: 2rem !important;
+            }
         }
     </style>
     """,
     unsafe_allow_html=True,
 )
+
 
 
 # =========================================================
